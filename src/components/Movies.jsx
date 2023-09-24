@@ -22,7 +22,7 @@ const MovieSuggestions = () => {
   ]);
 
   const movieData = async (searchTerm) => {
-    const response = await fetch(`http://www.omdbapi.com/?s=${searchTerm}&apikey=ae0b0db1`);
+    const response = await fetch(`https://www.omdbapi.com/?s=${searchTerm}&apikey=ae0b0db1`);
     const data = await response.json();
     setFilteredArray(data.Search);
   }
