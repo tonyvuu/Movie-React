@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../App.css';
+import './Movies.css';
 
 const MovieSuggestions = () => {
   const [filteredText, setFilteredText] = useState('');
