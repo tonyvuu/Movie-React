@@ -71,3 +71,34 @@
   width: 80px;
   margin-left: 10px;
 }
+
+.suggestions-container {
+  margin-top: 20px;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.suggestion {
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+
+}
+
+.second-header {
+  color: red;
+  /* margin-left: 600px; */
+}
+.footer{
+  margin-bottom: 1px;
+  text-align: center;
+  margin-top: 30px;
+}
