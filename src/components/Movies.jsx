@@ -4,6 +4,7 @@ import './Movies.css';
 const MovieSuggestions = () => {
   const [filteredText, setFilteredText] = useState('');
   const [filteredArray, setFilteredArray] = useState([]);
+  const [selectedMovieInfo, setSelectedMovieInfo] = useState(null);
   const [suggestions, setSuggestions] = useState([
     'one-piece',
     'spider-man',
@@ -18,13 +19,20 @@ const MovieSuggestions = () => {
     'madea',
     'the great gatsby',
     'insidious',
-    'star wars',
+    'star wars'
   ]);
 
   const movieData = async (searchTerm) => {
     const response = await fetch(`https://www.omdbapi.com/?s=${searchTerm}&apikey=ae0b0db1`);
     const data = await response.json();
     setFilteredArray(data.Search || []);
+  }
+
+  const fetchMovieInfo = async (imdbID) => {
+    const response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=ae0b0db1`);
+    const data = await response.json();
+    setSelectedMovieInfo(data);
+    console.log(data)
   }
 
   const handleChange = (e) => {
@@ -42,6 +50,10 @@ const MovieSuggestions = () => {
 
   const handleSuggestionClick = (suggestion) => {
     movieData(suggestion);
+  };
+
+  const handlePosterClick = (imdbID) => {
+    fetchMovieInfo(imdbID);
   };
 
   useEffect(() => {
@@ -74,26 +86,47 @@ const MovieSuggestions = () => {
         </button>
       </div>
       <ul className='list-container'>
-        {filteredArray.length > 0 ? (
-          filteredArray.map((movie, index) => (
-            <div className='movie-item' key={index} onClick={() => handleSuggestionClick(movie.Title)}>
-              <li>
-                <h2 style={{ color: 'yellow', fontFamily: 'Poppins' }}>
-                  {movie.Title}
-                </h2>
-                <p>{movie.Year}</p>
-                <img src={movie.Poster} alt={`${movie.Title} Poster`} />
-              </li>
-            </div>
-          ))
-        ) : (
-          <div className="no-movie-found">
-            Can't find any movies matching your search. 
-            <div className='no-movie-icon'><img src='https://www.iconpacks.net/icons/2/free-sad-face-icon-2691-thumb.png'></img>
-</div>
+      {filteredArray.length > 0 ? (
+  filteredArray.map((movie, index) => (
+    <div className='movie-item' key={index}>
+      <li>
+        <h2 style={{ color: 'yellow', fontFamily: 'Poppins' }}>
+          {movie.Title}
+        </h2>
+        <p>{movie.Year}</p>
+        <img src={movie.Poster} alt={`${movie.Title} Poster`} onClick={() => handlePosterClick(movie.imdbID)} />
+        {selectedMovieInfo && selectedMovieInfo.imdbID === movie.imdbID && (
+          <div className="movie-info">
+            <h3>{selectedMovieInfo.Title}</h3>
+            <h4>Director: {selectedMovieInfo.Director}</h4>
+            <p>Actors: {selectedMovieInfo.Actors}</p>
+            <p>Genre: {selectedMovieInfo.Genre}</p>
+            <p>Runtime: {selectedMovieInfo.Runtime}</p>
+            <p>Plot: {selectedMovieInfo.Plot}</p>
+
           </div>
         )}
+      </li>
+    </div>
+  ))
+) : (
+  <div className="no-movie-found">
+    Can't find any movies matching your search. 
+    <div className='no-movie-icon'>
+      <img src='https://www.iconpacks.net/icons/2/free-sad-face-icon-2691-thumb.png' alt="Sad face" />
+    </div>
+  </div>
+)}
       </ul>
+      {/* {selectedMovieInfo && (
+        <div className="selected-movie-info">
+          <h2>{selectedMovieInfo.Title}</h2>
+          <h4>Director: {selectedMovieInfo.Director}</h4>
+          <p>Plot: {selectedMovieInfo.Plot}</p>
+          <p>Runtime: {selectedMovieInfo.Runtime}</p>
+          <p>Actors: {selectedMovieInfo.Actors}</p>
+        </div>
+      )} */}
       <div className='suggestions-container'>
         <h3 className='second-header'>Popular Movie Suggestions:</h3>
         <div className='suggestions-list'>
