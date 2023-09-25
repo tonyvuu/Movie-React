@@ -25,6 +25,10 @@ This README file provides an overview of the project, instructions on setting up
 4. Click on the movie poster to fetch extended details like runtime, plot, director, and more using a secondary API key.
 5. The fetched movie information will be displayed on the page, providing a comprehensive view of the selected movie.
 
+
+![Screenshot](./src/assets/Screenshot2.png)
+
+
 ## Fetching Extended Movie Details
 
 To retrieve extended movie details like runtime, plot, director, and more:
