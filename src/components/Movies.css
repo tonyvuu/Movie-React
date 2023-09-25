@@ -40,13 +40,12 @@
 }
 
 .movie-item {
-  flex: 0 0 calc(33.333% - 80px); 
+  flex: 0 0 calc(25.333% - 80px); 
   margin: 15px;
   padding: 10px;
   background-color: rgb(17, 17, 17);
   border-radius: 10px;
   text-align: center;
-
 }
 
 .movie-item img {
@@ -101,4 +100,18 @@
   margin-bottom: 1px;
   text-align: center;
   margin-top: 30px;
+}
+
+.no-movie-found {
+    font-weight: bold;
+    text-align: center;
+    margin-left: 500px;
+    margin-top: 200px;
+    margin-bottom: 200px;
+    font-size: xx-large;
+  }
+
+.no-movie-found img{
+height: 200px;
+width: 200px;
 }

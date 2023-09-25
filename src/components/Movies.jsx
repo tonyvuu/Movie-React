@@ -18,13 +18,13 @@ const MovieSuggestions = () => {
     'madea',
     'the great gatsby',
     'insidious',
-    'star wars'
+    'star wars',
   ]);
 
   const movieData = async (searchTerm) => {
     const response = await fetch(`https://www.omdbapi.com/?s=${searchTerm}&apikey=ae0b0db1`);
     const data = await response.json();
-    setFilteredArray(data.Search);
+    setFilteredArray(data.Search || []);
   }
 
   const handleChange = (e) => {
@@ -62,6 +62,7 @@ const MovieSuggestions = () => {
       </h1>
       <div className='search-bar'>
         <input
+          maxLength={30}
           className='search-input'
           type="text"
           value={filteredText}
@@ -73,17 +74,25 @@ const MovieSuggestions = () => {
         </button>
       </div>
       <ul className='list-container'>
-        {filteredArray.map((movie, index) => (
-          <div className='movie-item' key={index} onClick={() => handleSuggestionClick(movie.Title)}>
-            <li>
-              <h2 style={{ color: 'yellow', fontFamily: 'Poppins' }}>
-                {movie.Title}
-              </h2>
-              <p>{movie.Year}</p>
-              <img src={movie.Poster} alt={`${movie.Title} Poster`} />
-            </li>
+        {filteredArray.length > 0 ? (
+          filteredArray.map((movie, index) => (
+            <div className='movie-item' key={index} onClick={() => handleSuggestionClick(movie.Title)}>
+              <li>
+                <h2 style={{ color: 'yellow', fontFamily: 'Poppins' }}>
+                  {movie.Title}
+                </h2>
+                <p>{movie.Year}</p>
+                <img src={movie.Poster} alt={`${movie.Title} Poster`} />
+              </li>
+            </div>
+          ))
+        ) : (
+          <div className="no-movie-found">
+            Can't find any movies matching your search. 
+            <div className='no-movie-icon'><img src='https://www.iconpacks.net/icons/2/free-sad-face-icon-2691-thumb.png'></img>
+</div>
           </div>
-        ))}
+        )}
       </ul>
       <div className='suggestions-container'>
         <h3 className='second-header'>Popular Movie Suggestions:</h3>
