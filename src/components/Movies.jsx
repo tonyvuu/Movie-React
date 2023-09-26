@@ -93,7 +93,6 @@ const MovieSuggestions = () => {
         <h2 style={{ color: 'yellow', fontFamily: 'Poppins' }}>
           {movie.Title}
         </h2>
-        <p>{movie.Year}</p>
         <img src={movie.Poster} alt={`${movie.Title} Poster`} onClick={() => handlePosterClick(movie.imdbID)} />
         {selectedMovieInfo && selectedMovieInfo.imdbID === movie.imdbID && (
           <div className="movie-info">
@@ -102,6 +101,7 @@ const MovieSuggestions = () => {
             <p>Actors: {selectedMovieInfo.Actors}</p>
             <p>Genre: {selectedMovieInfo.Genre}</p>
             <p>Runtime: {selectedMovieInfo.Runtime}</p>
+            <p>Year: {selectedMovieInfo.Year}</p>
             <p>Plot: {selectedMovieInfo.Plot}</p>
 
           </div>
