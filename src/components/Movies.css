@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;800&display=swap');
 
+body{
+  background-color: black;
+}
+
 .search-bar {
   top: 0; 
   right: 20px; 
@@ -43,9 +47,10 @@
   flex: 0 0 calc(25.333% - 80px); 
   margin: 15px;
   padding: 10px;
-  background-color: rgb(17, 17, 17);
+  background-color: rgb(45, 44, 44);
   border-radius: 10px;
   text-align: center;
+  color: white;
 }
 
 .movie-item img {

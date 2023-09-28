@@ -59,7 +59,7 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
   };
 
   useEffect(() => {
-    movieData('jurassic-world');
+    movieData('one-piece');
   }, []); //initialize the page with jurassic-world. 
 
   return ( 
@@ -144,7 +144,3 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
 };
 
 export default MovieSuggestions;
-
-
-
-
