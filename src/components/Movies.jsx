@@ -7,6 +7,8 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
   const [filteredArray, setFilteredArray] = useState([]); //filteredArray (variable) is being updated by setFilteredArray by using useState
   const [selectedMovieInfo, setSelectedMovieInfo] = useState(null); //it initiliaze selectedMovieInfo with the value of null 
   //then it uses 'useState' hook to manage the state of variable (selectedMovieInfo)
+  const [movieDetails, setMovieDetails] = useState([]);
+  const [isDetailedSelected, setIsDetailSelected] = useState(false);
   const [suggestions, setSuggestions] = useState([ // useState is holding all of the pre-title I inputted, that then pass on to the stored suggestion variable
     'one-piece',
     'spider-man',
@@ -31,11 +33,16 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
   }
 
   const fetchMovieInfo = async (imdbID) => { //asynchronous arrow function that has a parameters called imdbID
+    if(!isDetailedSelected){
     const response = await fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=ae0b0db1`);// assigned response variable to store the fetch api data
     const data = await response.json();// a function that reads the response like fetch and interpret it as JSON data, making it usable js object then store into data variable
     setSelectedMovieInfo(data); //selectedMovieInfo (state variable) is being updated by the function setSelectedMovieInfo
-    console.log(data)// console.log allows it to show up on the console 
+    setIsDetailSelected(true);
+  } else{
+    setIsDetailSelected(false)
   }
+};
+
 
   const handleChange = (e) => { 
     setFilteredText(e.target.value.toLowerCase()); //a function that updates the filteredText state based on the user input. It also lowercase it.
@@ -101,7 +108,27 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
         </h2>
         {/* when a movie poster is clicked: it called the handlePosterClick function with the imdbID of the clicked movie */}
         <img src={movie.Poster} alt={`${movie.Title} Poster`} onClick={() => handlePosterClick(movie.imdbID)} />
-        {selectedMovieInfo && selectedMovieInfo.imdbID === movie.imdbID && (
+        {isDetailedSelected ? (
+        <div id="lightbox-container">
+          <div id="lightbox">
+            <div id="lightbox-image-container" >
+              <img src={selectedMovieInfo.Poster} />
+            </div>
+            <p>Title: {selectedMovieInfo.Title}</p>
+            <p>Released: {selectedMovieInfo.Released}</p>
+            <p>Summary: {selectedMovieInfo.Plot}</p>
+            <p>Director: {selectedMovieInfo.Director}</p>
+            <p>Runtime: {selectedMovieInfo.Runtime}</p>
+            <p>IMBD Rating: {selectedMovieInfo.imdbRating}</p>
+            <p>Genre: {selectedMovieInfo.Genre}</p>
+            <p>Rated: {selectedMovieInfo.Rated}</p>
+            <div id="lightbox-button">
+              <button onClick={handlePosterClick}>Collapse</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+        {/* {selectedMovieInfo && selectedMovieInfo.imdbID === movie.imdbID && (
           <div className="movie-info">
             <h3>{selectedMovieInfo.Title}</h3>
             <h4>Director: {selectedMovieInfo.Director}</h4>
@@ -112,7 +139,7 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
             <p>Plot: {selectedMovieInfo.Plot}</p>
 
           </div>
-        )}
+        )} */}
       </li>
     </div>
   ))
