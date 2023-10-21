@@ -114,7 +114,7 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
         </h2>
         {/* when a movie poster is clicked: it called the handlePosterClick function with the imdbID of the clicked movie */}
         <img src={movie.Poster} alt={`${movie.Title} Poster`} onClick={() => handlePosterClick(movie.imdbID)} />
-        <button onClick={() => fetchMovieInfo(movie.imdbID)}>Show Details</button>
+        <button className="show-details-button" onClick={() => fetchMovieInfo(movie.imdbID)}>Show Details</button>        
         {isDetailedSelected ? (
         <div id="lightbox-container">
         <div id="lightbox">
@@ -132,7 +132,7 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
             <p><b>Rated:</b> {selectedMovieInfo.Rated}</p>
           </div>
           <div id="lightbox-button">
-            <button onClick={handlePosterClick}>Close</button>
+          <button className="close-button" onClick={handlePosterClick}>Close</button>
           </div>
         </div>
       </div>      
