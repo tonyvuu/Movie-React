@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'; //imported react, useState, and useEffect to this component
 import './Movies.css'; //imported movie.css 
 
+
+
 const MovieSuggestions = () => { // an arrow functional component named MovieSuggestion
   const [filteredText, setFilteredText] = useState(''); // filteredText is my declared state variable and setFilteredText is updating the data 
   //with useState to pass into that state variable (filteredText)
   const [filteredArray, setFilteredArray] = useState([]); //filteredArray (variable) is being updated by setFilteredArray by using useState
   const [selectedMovieInfo, setSelectedMovieInfo] = useState(null); //it initiliaze selectedMovieInfo with the value of null 
   //then it uses 'useState' hook to manage the state of variable (selectedMovieInfo)
-  const [movieDetails, setMovieDetails] = useState([]);
   const [isDetailedSelected, setIsDetailSelected] = useState(false);
   const [suggestions, setSuggestions] = useState([ // useState is holding all of the pre-title I inputted, that then pass on to the stored suggestion variable
     'one-piece',
@@ -64,13 +65,18 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
   const handlePosterClick = (imdbID) => {
     fetchMovieInfo(imdbID);// a function that fetches the detailed movie information when the poster is clicked
   };
+  const handleCloseOverlay = () => {
+    setIsDetailSelected(false);
+  };
+  
 
   useEffect(() => {
     movieData('one-piece');
-  }, []); //initialize the page with jurassic-world. 
+  }, []); //initialize the page with one-piece. 
 
   return ( 
     <div>
+      <div id="overlay" style={{ display: isDetailedSelected ? 'block' : 'none' }} onClick={handleCloseOverlay}></div>
       <h1>
         {/* {Movie.TV title when click is going to run the onClick event listener that then runs the function handleRandomSuggestionClick*/}
         <a href="#" className='movie-title' onClick={handleRandomSuggestionClick}>
@@ -108,38 +114,29 @@ const MovieSuggestions = () => { // an arrow functional component named MovieSug
         </h2>
         {/* when a movie poster is clicked: it called the handlePosterClick function with the imdbID of the clicked movie */}
         <img src={movie.Poster} alt={`${movie.Title} Poster`} onClick={() => handlePosterClick(movie.imdbID)} />
+        <button onClick={() => fetchMovieInfo(movie.imdbID)}>Show Details</button>
         {isDetailedSelected ? (
         <div id="lightbox-container">
-          <div id="lightbox">
-            <div id="lightbox-image-container" >
-              <img src={selectedMovieInfo.Poster} />
-            </div>
-            <p>Title: {selectedMovieInfo.Title}</p>
-            <p>Released: {selectedMovieInfo.Released}</p>
-            <p>Summary: {selectedMovieInfo.Plot}</p>
-            <p>Director: {selectedMovieInfo.Director}</p>
-            <p>Runtime: {selectedMovieInfo.Runtime}</p>
-            <p>IMBD Rating: {selectedMovieInfo.imdbRating}</p>
-            <p>Genre: {selectedMovieInfo.Genre}</p>
-            <p>Rated: {selectedMovieInfo.Rated}</p>
-            <div id="lightbox-button">
-              <button onClick={handlePosterClick}>Collapse</button>
-            </div>
+        <div id="lightbox">
+          <div id="lightbox-image-container">
+            <img src={selectedMovieInfo.Poster} />
+          </div>
+          <div id="lightbox-text">
+            <p><b>Title:</b> {selectedMovieInfo.Title}</p>
+            <p><b>Released:</b> {selectedMovieInfo.Released}</p>
+            <p> <b>Summary:</b> {selectedMovieInfo.Plot}</p>
+            <p> <b>Director:</b> {selectedMovieInfo.Director}</p>
+            <p><b>Runtime:</b> {selectedMovieInfo.Runtime}</p>
+            <p><b>IMDB Rating:</b> {selectedMovieInfo.imdbRating}</p>
+            <p><b>Genre:</b> {selectedMovieInfo.Genre}</p>
+            <p><b>Rated:</b> {selectedMovieInfo.Rated}</p>
+          </div>
+          <div id="lightbox-button">
+            <button onClick={handlePosterClick}>Close</button>
           </div>
         </div>
+      </div>      
       ) : null}
-        {/* {selectedMovieInfo && selectedMovieInfo.imdbID === movie.imdbID && (
-          <div className="movie-info">
-            <h3>{selectedMovieInfo.Title}</h3>
-            <h4>Director: {selectedMovieInfo.Director}</h4>
-            <p>Actors: {selectedMovieInfo.Actors}</p>
-            <p>Genre: {selectedMovieInfo.Genre}</p>
-            <p>Runtime: {selectedMovieInfo.Runtime}</p>
-            <p>Year: {selectedMovieInfo.Year}</p>
-            <p>Plot: {selectedMovieInfo.Plot}</p>
-
-          </div>
-        )} */}
       </li>
     </div>
   ))
